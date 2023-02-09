@@ -83,7 +83,7 @@ ind <- read.table("../../BigData/Maize/v4/Genotypes/WiDiv_RNAseq/rMVP/WiDiv752.g
 rownames(K) <- ind$V1
 colnames(K) <- ind$V1
 
-m <- mmer(NPQmaxme~1 + covariate,
+m <- mmer(ph~1 + covariate,
      random=~vsr(Taxa,Gu=K),
      rcov=~units, nIters=3,
      data=z, verbose = FALSE)
@@ -93,9 +93,26 @@ m2 <- mmer(NPQmaxme ~  covariate + Zm00001d042697,
           rcov=~units, nIters=3,
           data=z, verbose = FALSE)
 
+z <- data.frame(ph=ph, covariate, genExp)
+z <- data.frame(Taxa=X$Taxa, z)
 
-res2 <- apply(genExp[,1:5], 2, function(x){
-  m2 <- mmer(NPQmaxme ~  covariate + x,
+m <- mmer(ph ~  PC1 + PC2 + PC3,
+           random=~vsr(Taxa,Gu=K),
+           rcov=~units, nIters=3,
+           data=q, verbose = FALSE)
+
+resMix <- c()
+
+for (i in 8:100){
+  
+  q <- z[,c(1:5,i)]
+  colnames(q)[6] <- 'gene'
+
+  m2 <- mmer(ph ~  PC1 + PC2 + PC3 + gene,
              random=~vsr(Taxa,Gu=K),
              rcov=~units, nIters=3,
-             data=z, verbose = FALSE)})
+             data=q, verbose = FALSE)
+  a <- anova(m, m2)
+  resMix <- c(resMix, a$PrChisq[2])
+}
+
