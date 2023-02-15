@@ -68,9 +68,13 @@ axis.set <- res %>%
   group_by(chromosome) %>% 
   summarize(center = (max(BPcum) + min(BPcum)) / 2, maxBP=max(BPcum))
 
+trait <- colnames(res)[6:36]
+
+for (i in 6:36){
+  
 g1 <- ggplot() + 
   geom_hline(yintercept = -log10(0.05/nrow(res)) , linetype=2) +
-  geom_point(data=res, aes(BPcum, -log10(NPQmaxme), colour=as.character(chromosome))) + 
+  geom_point(data=res, aes(BPcum, -log10(res[,i]), colour=as.character(chromosome))) + 
   scale_color_d3() + 
   scale_x_continuous(label = axis.set$chromosome, breaks = axis.set$center) + 
   theme(legend.position = "none") + 
@@ -79,7 +83,7 @@ g1 <- ggplot() +
 
 g2 <- ggplot() + 
   geom_hline(yintercept = -log10(0.05/nrow(res2)) , linetype=2) +
-  geom_point(data=res2, aes(BPcum, -log10(NPQmaxme), colour=as.character(chromosome))) + 
+  geom_point(data=res2, aes(BPcum, -log10(res2[,i]), colour=as.character(chromosome))) + 
   scale_color_d3() + 
   scale_x_continuous(label = axis.set$chromosome, breaks = axis.set$center) + 
   theme(legend.position = "none") + 
@@ -88,7 +92,7 @@ g2 <- ggplot() +
 
 g3 <- ggplot() + 
   geom_hline(yintercept = -log10(0.05/nrow(res3)) , linetype=2) +
-  geom_point(data=res3, aes(BPcum, -log10(NPQmaxme), colour=as.character(chromosome))) + 
+  geom_point(data=res3, aes(BPcum, -log10(res3[,i]), colour=as.character(chromosome))) + 
   scale_color_d3() + 
   scale_x_continuous(label = axis.set$chromosome, breaks = axis.set$center) + 
   theme(legend.position = "none") + 
@@ -97,14 +101,18 @@ g3 <- ggplot() +
 
 g4 <- ggplot() + 
   geom_hline(yintercept = -log10(0.05/nrow(res4)) , linetype=2) +
-  geom_point(data=res4, aes(BPcum, -log10(NPQmaxme), colour=as.character(chromosome))) + 
+  geom_point(data=res4, aes(BPcum, -log10(res4[,i]), colour=as.character(chromosome))) + 
   scale_color_d3() + 
   scale_x_continuous(label = axis.set$chromosome, breaks = axis.set$center) + 
   theme(legend.position = "none") + 
   ylab("-log10(p-value)") +  
   xlab("Chromosome")
 
-g1 + g2 + g3 + g4 + plot_annotation(tag_levels = "a")
+gg <- g1 + g2 + g3 + g4 + plot_annotation(tag_levels = "a")
+
+ggsave(plot = gg, paste0("../Data/Maize_NPQ_Natural_Variation/figures/TWAS/", trait[i-5], ".png"), width = 10)
+
+}
 
 blup <- fread("../Data/Maize_NPQ_Natural_Variation/data/work/blups/blup2020gwasRNA.csv")
 blup2 <- fread("../Data/Maize_NPQ_Natural_Variation/data/work/blups/blup2021gwasRNA.csv")
@@ -116,10 +124,11 @@ a <- merge(a, blup[,c("Taxa", "NPQmaxme")], by="Taxa")
 colnames(a)[4] <- "NPQmax_2020"
 a <- merge(a, blup2[,c("Taxa", "NPQmaxme")], by="Taxa")
 colnames(a)[5] <- "NPQmax_2021"
-a$year <- str_split_fixed(a$name, "_", 2)[,2]
 
 a <- a %>% pivot_longer(cols = 4:5)
 a <- a[!a$Study=="WiDiv-942**",]
+a$year <- str_split_fixed(a$name, "_", 2)[,2]
+
 
 ggplot(a, aes(Zm00001d042697, value)) + 
   geom_point() + 
@@ -127,13 +136,3 @@ ggplot(a, aes(Zm00001d042697, value)) +
   facet_grid(Study~year) + 
   xlab(expression(italic(PsbS)~(FPKM))) + 
   ylab(expression(NPQ[italic(max)]))
-
-
-ggplot() + 
-  geom_hline(yintercept = -log10(0.05/nrow(res2)) , linetype=2) +
-  geom_point(data=res2, aes(BPcum, -log10(res2[,17]), colour=as.character(chromosome))) + 
-  scale_color_d3() + 
-  scale_x_continuous(label = axis.set$chromosome, breaks = axis.set$center) + 
-  theme(legend.position = "none") + 
-  ylab("-log10(p-value)") +  
-  xlab("Chromosome")
