@@ -9,6 +9,9 @@ theme_update(axis.text.x = element_text(colour = "black"), axis.text.y = element
 # Load data
 
 gff <- fread("../../BigData/Maize/v4/GFF/Zm-B73-REFERENCE-GRAMENE-4.0_Zm00001d.1.gff3.gz",skip = 5, fill = T)
+gff2 <- fread("../../BigData/Maize/v5/GFF/Zm-B73-REFERENCE-NAM-5.0_Zm00001eb.1.gff3.gz",skip = 5, fill = T)
+
+###
 
 RMIP_2020 <- fread("../Data/Maize_NPQ_Natural_Variation/data/figures/Fig1c_RMIP.csv")
 RMIP_2021 <- fread("../Data/Maize_NPQ_Natural_Variation/data/work/RMIPclean2021.csv")
@@ -17,8 +20,7 @@ RMIP_2021 <- fread("../Data/Maize_NPQ_Natural_Variation/data/work/RMIPclean2021.
 
 RMIP_2020 <- RMIP_2020[RMIP>1,]
 
-###
-
+### PSI-PsbS
 psi.psbs <- list()
 psi.psbs$rmip2020 <- RMIP_2020[CHROM==3  & POS > 175652936 & POS < 178038945,]
 psi.psbs$rmip2021 <- RMIP_2021[CHROM==3  & POS > 175652936 & POS < 178038945,]
@@ -26,6 +28,7 @@ psi.psbs$gen <- gff[V1=="Chr3" & V4 > 175652936 & V5 < 178038945]
 psi.psbs$LD <- fread("../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs3_176152936.ld")
 psi.psbs$psbs <- psi.psbs$gen[grep("Zm00001d042697",psi.psbs$gen$V9)]
 psi.psbs$psi <- psi.psbs$gen[grep("Zm00001d042669",psi.psbs$gen$V9)]
+psi.psbs$psbs_v5 <- gff2[grep("Zm00001eb146510", gff2$V9)]
 
 g.psi.rmip2020 <- ggplot(psi.psbs$rmip2020, aes(POS, RMIP)) + 
   geom_point(size=5, alpha=0.8, aes(colour=trait)) + 
@@ -65,13 +68,15 @@ g.psipsbs.gene <- ggplot() +
   xlim(175652936, 178038945)
 
 g.psbs <- ggplot() + 
-  geom_segment(data=psi.psbs$psbs[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
+  geom_segment(data=psi.psbs$psbs_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
                arrow = arrow(length = unit(1, "cm"))) + 
-  geom_segment(data=psi.psbs$psbs[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
+  geom_segment(data=psi.psbs$psbs_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
+  annotate("point", y=0.75, x=179566467, shape=25, size=5, fill="red") + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
-        axis.ticks.y = element_blank(), axis.line.y = element_blank())
+        axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
+  ylim(-1, 1)
 
 g.psi <- ggplot() + 
   geom_segment(data=psi.psbs$psi[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
@@ -82,12 +87,8 @@ g.psi <- ggplot() +
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
         axis.ticks.y = element_blank(), axis.line.y = element_blank())
 
-
-
-g.psi.psbs <- (g.psi.rmip2020 / g.psi.rmip2021 / g.psi.LD / g.psipsbs.gene) / (g.psi + g.psbs) + 
+(g.psi.rmip2020 / g.psi.rmip2021 / g.psi.LD / g.psipsbs.gene) / (g.psi + g.psbs) + 
   plot_layout(heights = c(4,4,3,0.5,1))
-
-g.psi.psbs
 
 ###
 irm1 <- list()
