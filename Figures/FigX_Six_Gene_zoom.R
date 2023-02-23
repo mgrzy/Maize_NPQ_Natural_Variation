@@ -163,35 +163,46 @@ trx <- list()
 trx$rmip2020 <- RMIP_2020[CHROM==3  & POS > 147481265 & POS < 147581265,]
 trx$gen <- gff[V1=="Chr3" & V4 > 147481265 & V5 < 147581265]
 trx$trx_v5 <- gff2[grep("Zm00001eb140270", gff2$V9)]
+trx$trx <- gff[grep("Zm00001d042017", gff$V9)]
+
 
 trx$LD <- fread("../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs3_147531265.ld")
 
 g.trx.rmip2020 <- ggplot(trx$rmip2020, aes(POS, RMIP)) + 
   geom_point(size=5, aes(colour=trait)) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-        axis.ticks.x = element_blank()) + 
-  xlim(147481265, 147581265)
+        axis.ticks.x = element_blank(), legend.position = c(0.9, 0.8)) + 
+  xlim(147481265, 147581265) + 
+  scale_color_manual(values = c("darkgreen", "grey", "grey10"),
+                                        name="Trait related to", na.translate = F, label=greeks)
 
 g.trx.LD <- ggplot(trx$LD, aes(BP_B, R2)) + 
   geom_point(size=5, alpha=0.8, colour="dodgerblue4") + 
   ylab(expression(LD~(r^2))) + 
-  #theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-  #      axis.ticks.x = element_blank()) + 
-  #scale_x_continuous(labels = paste0(c("182,382,800", "182,383,200", "182,383,600")),
-  #                   breaks = c(182382800, 182383200, 182383600), limits = c(182382424, 182383814)) + 
   xlab("Chromosome 2") + 
-  xlim(147481265, 147581265)
+  xlim(147481265, 147581265) + 
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        axis.ticks.x = element_blank())
 
+trx$gen[grep("Zm00001d042016", trx$gen$V9),]$V8 <- 1
+trx$gen[grep("Zm00001d042017", trx$gen$V9),]$V8 <- 1
+trx$gen[grep("Zm00001d042018", trx$gen$V9),]$V8 <- -1
+trx$gen[grep("Zm00001d042019", trx$gen$V9),]$V8 <- 1
+
+trx$gen$V8 <- as.numeric(trx$gen$V8)
+trx$gen <- trx$gen[!which(is.na(trx$gen$V8)),]
 
 g.trx.gene <- ggplot() + 
-  geom_segment(data=trx$gen[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0)) + 
-  geom_segment(data=trx$gen[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
-  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-        axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
-        axis.text.y = element_blank(), axis.title.y = element_blank(), 
+  geom_segment(data=trx$gen[V3=="gene",], aes(x=V4, xend=V5, y=V8, yend=V8)) + 
+  geom_segment(data=trx$gen[V3=="CDS",], aes(x=V4, xend=V5, y=V8, yend=V8), size=5) + 
+  geom_segment(data=trx$trx[V3=="gene",], aes(x=V4, xend=V5, y=1, yend=1), colour="red") + 
+  geom_segment(data=trx$trx[V3=="CDS",], aes(x=V4, xend=V5, y=1, yend=1), size=5, colour="red") + 
+  theme(axis.text.y = element_blank(), axis.title.y = element_blank(), 
         axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
-  xlim(147481265, 147581265)
-
+  scale_x_continuous(labels = paste0(c("147,500", "147,525", "147,550", "147,575"), " kB"), 
+                     breaks = c(147500000, 147525000, 147550000, 147575000), limits = c(147481265, 147581265)) +
+  ylim(-2,2) +
+  xlab("Chromosome 3")
 
 g.trx <- ggplot() + 
   geom_segment(data=trx$trx_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
@@ -205,12 +216,11 @@ g.trx <- ggplot() +
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
         axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
-  ylim(-1, 1)
+  ylim(-1, 1) 
 
-g.trx.rmip2020 / g.trx.LD / g.trx.gene / g.trx + plot_layout(heights = c(4,4,1,1))
+g.3 <- g.trx.rmip2020 / g.trx.LD / g.trx.gene / g.trx + plot_layout(heights = c(4,4,1,1))
 
-ggsave(plot = g.3, filename = "../Data/Maize_NPQ_Natural_Variation/figures/IRM1.svg", device = "svg", width = 12, height = 6)
-
+ggsave(plot = g.3, filename = "../Data/Maize_NPQ_Natural_Variation/figures/TRX.svg", device = "svg", width = 12, height = 6)
 
 ### ACHT3
 acht3 <- list()
