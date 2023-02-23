@@ -231,20 +231,17 @@ acht3$acht3_v5 <- gff2[grep("Zm00001eb098640", gff2$V9)]
 acht3$LD <- fread("../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs7_179281748.ld")
 
 g.acht3.rmip2020 <- ggplot(acht3$rmip2020, aes(POS, RMIP)) + 
-  geom_point(size=5, alpha=0.8, colour="yellow") + 
+  geom_point(size=5, alpha=0.8, aes(colour=trait)) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-        axis.ticks.x = element_blank()) + 
+        axis.ticks.x = element_blank(), legend.position = c(0.9, 0.8)) + 
   xlim(179271748, 179291748)
 
 g.acht3.LD <- ggplot(acht3$LD, aes(BP_B, R2)) + 
   geom_point(size=5, alpha=0.8, colour="dodgerblue4") + 
   ylab(expression(LD~(r^2))) + 
-  #theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-  #      axis.ticks.x = element_blank()) + 
-  #scale_x_continuous(labels = paste0(c("182,382,500", "182,383,000", "182,383,500"), " "),
-  #                   breaks = c(182382500, 182383000, 182383500)) + 
-  xlab("Chromosome 2") + 
-  xlim(179271748, 179291748)
+  scale_x_continuous(labels = paste0(c("179,275", "179,280", "179,285", "179,290"), " kB"),
+                     breaks = c(179275000, 179280000, 179285000, 179900000), limits = c(179271748, 179291748)) + 
+  xlab("Chromosome 7")
 
 g.acht3.gene <- ggplot() + 
   geom_segment(data=acht3$gen[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
