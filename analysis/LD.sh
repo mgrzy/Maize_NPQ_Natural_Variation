@@ -32,6 +32,13 @@ plink --bfile ../Data/Maize_NPQ_Natural_Variation/data/LD/rs3_147531265 --r2 --l
 --ld-window-kb 4000 --ld-window 99999 --ld-window-r2 0 \
 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs3_147531265
 
+plink --bfile ../../BigData/Maize/v4/Genotypes/WiDiv_RNAseq/plink/WiDiv752 --chr 3 --from-bp 147030941 \
+--to-bp 148299517 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/rs3_147531265_2 --make-bed
+
+plink --bfile ../Data/Maize_NPQ_Natural_Variation/data/LD/rs3_147531265_2 --r2 --ld-snp rs3_147531265 \
+--ld-window-kb 4000 --ld-window 99999 --ld-window-r2 0 \
+--out ../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs3_147531265_2
+
 ### ACHT3
 plink --bfile ../../BigData/Maize/v4/Genotypes/WiDiv_RNAseq/plink/WiDiv752 --chr 7 --from-bp 179231748 \
 --to-bp 179331748 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/rs7_179281748 --make-bed
