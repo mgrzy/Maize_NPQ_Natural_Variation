@@ -142,9 +142,9 @@ g.irm1.zoom <- ggplot(IRM1.data, aes(x = POS, y = -log10(Zm00001d005657.MLM), co
   geom_point(size=4) + 
   scale_colour_gradientn(colours=rev(jcolors('rainbow')), name="LD againt\n2:182,382,835") + 
   labs(x = "Chromosome 3",  y = expression(-log[10](italic(p)))) + 
-  scale_x_continuous(labels = paste0(c("182,100", "182,400", "182,700"), " kB"),
-                     breaks = c(182100000, 182400000,182700000)) + 
-  theme(axis.title.y = element_blank(), axis.title.x = element_blank(), legend.position = c(0.25, 0.8), 
+  scale_x_continuous(labels = paste0(c("182,382,800", "182,383,400"), " kB"),
+                   breaks = c(182382800, 182383400)) + 
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank(), legend.position = c(0.75, 0.8), 
         legend.direction="horizontal", legend.text = element_text(angle = 45, hjust = 0.5)) +
   guides(colour = guide_colourbar(title.position="top", title.hjust = 0),
          size = guide_legend(title.position="top", title.hjust = 0))
@@ -156,9 +156,10 @@ g.irm1.box <- ggplot(dat, aes(rs2_182382835, Zm00001d005657, fill=rs2_182382835)
   xlab("2:182,382,835") + 
   scale_fill_d3()
 
-g.irm1 + inset_element(g.irm1.zoom, left = 0.4, bottom = 0.4, right = 1, top = 1) + g.irm1.box + plot_layout(widths = c(4,1))
+g.irm1 + inset_element(g.irm1.zoom, left = 0.3, bottom = 0.4, right = 1, top = 1) + g.irm1.box + plot_layout(widths = c(4,1))
 
 ggsave("../Data/Maize_NPQ_Natural_Variation/figures/eQTL/IRM1_eQTL.svg", units = "mm", width = 75, height = 40, scale = 4)
+
 ############
 ### TRX1 ###
 ############
@@ -175,7 +176,7 @@ g.trx1 <- b %>%
   filter(-log10(Zm00001d042017.MLM)>2) %>%
   ggplot(aes(x = BPcum, y = -log10(Zm00001d042017.MLM))) +
   geom_segment(aes(x = 698866766, xend=698866766, y=2, yend=25), size=0.5) + 
-  annotate("text", x=698866766, y=24, hjust=1.2, label=expression(italic(TRX1-Y1)), size=10) + 
+  annotate("text", x=698866766, y=24, hjust=1.2, label=expression(italic(TRX1 - Y1)), size=10) + 
   geom_point(aes(colour=as.character(CHROM)), size=3) +
   scale_x_continuous(label = axis.set$CHROM, breaks = axis.set$center) +
   labs(x = "Chromosome",  y = expression(-log[10](italic(p)))) + 
@@ -220,12 +221,14 @@ g.acht3 <- b %>%
   labs(x = "Chromosome",  y = expression(-log[10](italic(p)))) + 
   theme(legend.position = "none")
 
+ggsave("../Data/Maize_NPQ_Natural_Variation/figures/eQTL/ACHT3_eQTL.svg", units = "mm", width = 75, height = 40, scale = 4)
+
 ############
 ### PMI1 ###
 ############
 
 PMI1.data <- b %>%
-  filter(CHROM==1 & POS > 86014177 & POS < 86114177)
+  filter(CHROM==1 & POS > 85914177 & POS < 86164177)
 PMI1.LD <- fread("../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs1_86064177.ld")
 PMI1.LD <- PMI1.LD[,c(6,7)]
 colnames(PMI1.LD) <- c("SNP", "R2")
@@ -250,9 +253,9 @@ g.pmi1.zoom <- ggplot(PMI1.data, aes(x = POS, y = -log10(Zm00001d029761.MLM), co
   geom_point(size=4) + 
   scale_colour_gradientn(colours=rev(jcolors('rainbow')), name="LD againt\n1:86,064,177") + 
   labs(x = "Chromosome 3",  y = expression(-log[10](italic(p)))) + 
-  scale_x_continuous(labels = paste0(c("860,63", "860,64", "860,65"), " kB"),
-                     breaks = c(86063000, 86064000,86065000)) + 
-  theme(axis.title.y = element_blank(), axis.title.x = element_blank(), legend.position = c(0.2, 0.8), 
+  scale_x_continuous(labels = paste0(c("860,00", "860,50", "861,000"), " kB"),
+                     breaks = c(86000000, 86050000,86100000)) + 
+  theme(axis.title.y = element_blank(), axis.title.x = element_blank(), legend.position = c(0.75, 0.8), 
         legend.direction="horizontal", legend.text = element_text(angle = 45, hjust = 0.5)) +
   guides(colour = guide_colourbar(title.position="top", title.hjust = 0),
          size = guide_legend(title.position="top", title.hjust = 0))

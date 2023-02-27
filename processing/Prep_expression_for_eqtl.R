@@ -20,4 +20,3 @@ dat.wgs <- plyr::join(tx.wgs, dat, by="Taxa")
 
 write.csv(dat.rna, "../Data/Maize_NPQ_Natural_Variation/data/work/exp_eqt_rnav4.csv", row.names = F)
 write.csv(dat.wgs, "../Data/Maize_NPQ_Natural_Variation/data/work/exp_eqt_wgsv5.csv", row.names = F)
-\

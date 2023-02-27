@@ -17,8 +17,8 @@ plink --bfile ../Data/Maize_NPQ_Natural_Variation/data/LD/rs3_176152936 --r2 --l
 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs3_177340601
 
 ###  IRM1 
-plink --bfile ../../BigData/Maize/v4/Genotypes/WiDiv_RNAseq/plink/WiDiv752 --chr 2 --from-bp 182332835 \
---to-bp 182432835 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/rs2_182382835 --make-bed
+plink --bfile ../../BigData/Maize/v4/Genotypes/WiDiv_RNAseq/plink/WiDiv752 --chr 2 --from-bp 182282835 \
+--to-bp 182482835 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/rs2_182382835 --make-bed
 
 plink --bfile ../Data/Maize_NPQ_Natural_Variation/data/LD/rs2_182382835 --r2 --ld-snp rs2_182382835 \
 --ld-window-kb 4000 --ld-window 99999 --ld-window-r2 0 \
@@ -48,8 +48,8 @@ plink --bfile ../Data/Maize_NPQ_Natural_Variation/data/LD/rs7_179281748 --r2 --l
 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/LD_rs7_179281748
 
 ### PMI1
-plink --bfile ../../BigData/Maize/v4/Genotypes/WiDiv_RNAseq/plink/WiDiv752 --chr 1 --from-bp 86014177 \
---to-bp 86114177 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/rs1_86064177 --make-bed
+plink --bfile ../../BigData/Maize/v4/Genotypes/WiDiv_RNAseq/plink/WiDiv752 --chr 1 --from-bp 85914177 \
+--to-bp 86164177 --out ../Data/Maize_NPQ_Natural_Variation/data/LD/rs1_86064177 --make-bed
 
 plink --bfile ../Data/Maize_NPQ_Natural_Variation/data/LD/rs1_86064177 --r2 --ld-snp rs1_86064177 \
 --ld-window-kb 4000 --ld-window 99999 --ld-window-r2 0 \
