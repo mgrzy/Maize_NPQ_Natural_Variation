@@ -120,7 +120,8 @@ g.irm1.rmip2020 <- ggplot(irm1$rmip2020, aes(POS, RMIP)) +
   geom_point(size=5, colour="yellow") + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank()) + 
-  xlim(182382424, 182383814)
+  xlim(181902891, 182859003) + 
+  ylab("RMIP\n2020")
 
 g.irm1.LD <- ggplot(irm1$LD, aes(BP_B, R2)) + 
   geom_point(size=5, alpha=0.8, colour="dodgerblue4") + 
@@ -128,7 +129,7 @@ g.irm1.LD <- ggplot(irm1$LD, aes(BP_B, R2)) +
   #theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
   #      axis.ticks.x = element_blank()) + 
 scale_x_continuous(labels = paste0(c("182,382,800", "182,383,200", "182,383,600")),
-                   breaks = c(182382800, 182383200, 182383600), limits = c(182382424, 182383814)) + 
+                   breaks = c(182382800, 182383200, 182383600), limits = c(181902891, 182859003)) + 
   xlab("Chromosome 2")
 
 g.irm1.gene <- ggplot() + 
