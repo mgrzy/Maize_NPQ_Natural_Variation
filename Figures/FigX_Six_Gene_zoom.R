@@ -81,7 +81,7 @@ g.psbs <- ggplot() +
   geom_segment(data=psi.psbs$psbs_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
                arrow = arrow(length = unit(0.5, "cm"), ends = "first")) + 
   geom_segment(data=psi.psbs$psbs_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
-  geom_segment(aes(y=0.5, yend=0, x=179566467, xend=179566467), size=1, colour="red") + 
+  geom_segment(aes(y=0.5, yend=-0.18, x=179566467, xend=179566467), size=1, colour="red") + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
@@ -92,10 +92,10 @@ g.psi <- ggplot() +
   geom_segment(data=psi.psbs$psi_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
                arrow = arrow(length = unit(0.5, "cm"))) + 
   geom_segment(data=psi.psbs$psi_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
-  geom_segment(aes(y=0.5, yend=0, x=178405582, xend=178405582), size=0.5, colour="red") + 
-  geom_segment(aes(y=0.5, yend=0, x=178405643, xend=178405643), size=0.5, colour="red") + 
-  geom_segment(aes(y=0.5, yend=0, x=178407540, xend=178407540), size=0.5, colour="red") + 
-  geom_segment(aes(y=0.5, yend=0, x=178407565, xend=178407565), size=0.5, colour="red") + 
+  geom_segment(aes(y=0.5, yend=-0.18, x=178405582, xend=178405582), size=0.5, colour="red") + 
+  geom_segment(aes(y=0.5, yend=-0.18, x=178405643, xend=178405643), size=0.5, colour="red") + 
+  geom_segment(aes(y=0.5, yend=-0.18, x=178407540, xend=178407540), size=0.5, colour="red") + 
+  geom_segment(aes(y=0.5, yend=-0.18, x=178407565, xend=178407565), size=0.5, colour="red") + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
@@ -104,9 +104,10 @@ g.psi <- ggplot() +
 
 
 g.12 <- (g.psi.rmip2020 / g.psi.rmip2021 / g.psi.LD / g.psipsbs.gene) / (g.psi + g.psbs) + 
-  plot_layout(heights = c(2,2,2,1,1))
+  plot_layout(heights = c(2,2,2,2,1))
 
-ggsave(plot = g.12, filename = "../Data/Maize_NPQ_Natural_Variation/figures/PSI3_PsbS_2.svg", device = "svg", width = 12, height = 6)
+ggsave(plot = g.12, filename = "../Data/Maize_NPQ_Natural_Variation/figures/PSI3_PsbS.svg", device = "svg", 
+       units = "mm", width = 175, height = 60, scale = 3)
 
 ### IRM1
 irm1 <- list()
