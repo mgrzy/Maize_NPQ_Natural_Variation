@@ -1,6 +1,9 @@
 library(tidyverse)
 library(data.table)
 
+theme_set(theme_classic(base_size = 16))
+theme_update(axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black"))
+
 NPQ20 <- fread("../Data/Maize_NPQ_Natural_Variation/data/work/blups/blup2020gwasRNA.csv")
 NPQ21 <- fread("../Data/Maize_NPQ_Natural_Variation/data/work/blups/blup2021gwasRNA.csv")
 NPQ20 <- NPQ20[,-c(2:3)]
@@ -68,8 +71,12 @@ a$year <- 2020
 a21$year <- 2021
 
 a <- rbind.data.frame(a, a21)
+a <- a %>%
+  filter(year==2020)
 
 ggplot(a, aes(x=value)) +
   geom_histogram(binwidth = 0.025) +
-  facet_wrap(year~.) +
   xlab("Pearson correlation")
+
+ggsave("../Data/Maize_NPQ_Natural_Variation/figures/corr.png", units = "mm", width = 75, height = 40, scale = 2)
+
