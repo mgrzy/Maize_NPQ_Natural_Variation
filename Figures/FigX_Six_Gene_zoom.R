@@ -61,27 +61,27 @@ g.psi.LD <- ggplot(psi.psbs$LD, aes(BP_B, R2)) +
   geom_point(size=4, alpha=0.8, colour="dodgerblue4") + 
   ylab(expression(LD~(r^2))) + 
   xlab("Chromosome 3") + 
-  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-        axis.ticks.x = element_blank()) + 
-  xlim(c(175652936, 178038945))
+  theme() + 
+  scale_x_continuous(labels = paste0(c("176,000", "176,500", "177,000", "177,500"), " kB"),
+                     breaks = c(176000000, 176500000, 177000000,177500000), limits = c(175652936, 178038945))
 
 g.psipsbs.gene <- ggplot() + 
-  geom_point(data=psi.psbs$gen[psi.psbs$gen$V7=="+",], aes(x=V4, y=0.5), shape="\u25BA", size=6) +
-  geom_point(data=psi.psbs$gen[psi.psbs$gen$V7=="-",], aes(x=V4, y=-0.5), shape="\u25C4", size=6) +
-  geom_point(data=psi.psbs$psbs, aes(x=V4, y=-0.5), shape="\u25C4", size=6, colour="red") +
-  geom_point(data=psi.psbs$psi, aes(x=V4, y=0.5), shape="\u25BA", size=6, colour="red") +
+  geom_point(data=psi.psbs$gen[psi.psbs$gen$V7=="+",], aes(x=V4, y=0.5), shape="\u25BA", size=5) +
+  geom_point(data=psi.psbs$gen[psi.psbs$gen$V7=="-",], aes(x=V4, y=-0.5), shape="\u25C4", size=5) +
+  geom_point(data=psi.psbs$psbs, aes(x=V4, y=-0.5), shape="\u25C4", size=5, colour="red") +
+  geom_point(data=psi.psbs$psi, aes(x=V4, y=0.5), shape="\u25BA", size=5, colour="red") +
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), 
-        axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
+        axis.ticks.y = element_blank(), axis.line.y = element_blank(),
+        axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        axis.ticks.x = element_blank()) + 
   ylim(-2, 2) + 
-  scale_x_continuous(labels = paste0(c("176,000", "176,500", "177,000", "177,500"), " kB"),
-                     breaks = c(176000000, 176500000, 177000000,177500000), limits = c(175652936, 178038945)) + 
-  xlab("Chromosome 3")
+  xlim(c(175652936, 178038945))
 
 g.psbs <- ggplot() + 
   geom_segment(data=psi.psbs$psbs_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
                arrow = arrow(length = unit(0.5, "cm"), ends = "first")) + 
   geom_segment(data=psi.psbs$psbs_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
-  geom_segment(aes(y=0.5, yend=-0.18, x=179566467, xend=179566467), size=1, colour="red") + 
+  geom_segment(aes(y=0.5, yend=0, x=179566467, xend=179566467), size=2, colour="red") + 
   annotate("text", x=179565678, y=-0.5, label=expression(Zm00001d042697~"("*italic(PSBS)*")")) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
@@ -94,10 +94,10 @@ g.psi <- ggplot() +
                arrow = arrow(length = unit(0.5, "cm"))) + 
   geom_segment(data=psi.psbs$psi_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
   annotate("text", x=178410159, y=-0.5, label=expression(Zm00001d042669~"("*italic(PSI3)*")")) + 
-  geom_segment(aes(y=0.5, yend=-0.18, x=178405582, xend=178405582), size=0.5, colour="red") + 
-  geom_segment(aes(y=0.5, yend=-0.18, x=178405643, xend=178405643), size=0.5, colour="red") + 
-  geom_segment(aes(y=0.5, yend=-0.18, x=178407540, xend=178407540), size=0.5, colour="red") + 
-  geom_segment(aes(y=0.5, yend=-0.18, x=178407565, xend=178407565), size=0.5, colour="red") + 
+  geom_segment(aes(y=0.5, yend=0, x=178405582, xend=178405582), size=1, colour="red") + 
+  geom_segment(aes(y=0.5, yend=0, x=178405643, xend=178405643), size=1, colour="red") + 
+  geom_segment(aes(y=0.5, yend=0, x=178407540, xend=178407540), size=1, colour="red") + 
+  geom_segment(aes(y=0.5, yend=0, x=178407565, xend=178407565), size=1, colour="red") + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
@@ -144,22 +144,32 @@ g.irm1.gene <- ggplot() +
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
         axis.ticks.y = element_blank(), axis.line.y = element_blank())
 
-g.irm1 <- ggplot() + 
-  geom_segment(data=irm1$irm1_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
+g.irm1.gene <- ggplot() + 
+  geom_segment(data=irm1$irm1_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), colour="red", 
                arrow = arrow(length = unit(0.5, "cm"), ends = "last")) + 
-  geom_segment(data=irm1$irm1_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
-  annotate("text", x=181981838, y=-0.75, label=expression(Zm00001d005657~"("*italic(IRM1)*")")) + 
-  geom_segment(aes(y=0.5, yend=0, x=181981544, xend=181981544), size=2, colour="red") + 
-  geom_segment(aes(y=0.5, yend=0, x=181981600, xend=181981600), size=2, colour="red") + 
-  geom_segment(aes(y=0.5, yend=0, x=181981652, xend=181981652), size=2, colour="red") + 
-  geom_segment(aes(y=0.5, yend=0, x=181982035, xend=181982035), size=2, colour="red") + 
+  geom_segment(data=irm1$irm1_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5, colour="red") + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
         axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
   ylim(-1, 1)
 
-g.3 <- g.irm1.rmip2020 / g.irm1.LD / g.irm1 + plot_layout(heights = c(4,4,1))
+g.irm1 <- ggplot() + 
+  geom_segment(data=irm1$irm1_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
+               arrow = arrow(length = unit(0.5, "cm"), ends = "last")) + 
+  geom_segment(data=irm1$irm1_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
+  annotate("text", x=181981838, y=-0.75, label=expression(Zm00001d005657~"("*italic(IRM1)*")")) + 
+  geom_segment(aes(y=1, yend=0, x=181981544, xend=181981544), size=2, colour="red") + 
+  geom_segment(aes(y=1, yend=0, x=181981600, xend=181981600), size=2, colour="red") + 
+  geom_segment(aes(y=1, yend=0, x=181981652, xend=181981652), size=2, colour="red") + 
+  geom_segment(aes(y=1, yend=0, x=181982035, xend=181982035), size=2, colour="red") + 
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
+        axis.text.y = element_blank(), axis.title.y = element_blank(), 
+        axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
+  ylim(-1, 1)
+
+g.3 <- g.irm1.rmip2020 / g.irm1.LD / g.irm1.gene / g.irm1 + plot_layout(heights = c(4,4,1,1))
 
 ggsave(plot = g.3, filename = "../Data/Maize_NPQ_Natural_Variation/figures/IRM1.svg", device = "svg", width = 12, height = 6)
 
@@ -181,14 +191,13 @@ g.trx.rmip2020 <- ggplot(trx$rmip2020, aes(POS, RMIP)) +
                                         name="Trait related to", na.translate = F, label=greeks) + 
   ylab("RMIP\n2020")
 
-
 g.trx.LD <- ggplot(trx$LD, aes(BP_B, R2)) + 
   geom_point(size=5, alpha=0.8, colour="dodgerblue4") + 
   ylab(expression(LD~(r^2))) + 
   xlab("Chromosome 2") + 
-  xlim(147481265, 147581265) + 
-  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-        axis.ticks.x = element_blank())
+  scale_x_continuous(labels = paste0(c("147,500", "147,525", "147,550", "147,575"), " kB"), 
+                     breaks = c(147500000, 147525000, 147550000, 147575000), limits = c(147481265, 147581265)) +
+  theme()
 
 trx$gen[grep("Zm00001d042016", trx$gen$V9),]$V8 <- -1
 trx$gen[grep("Zm00001d042017", trx$gen$V9),]$V8 <- -1
@@ -204,11 +213,11 @@ g.trx.gene <- ggplot() +
   geom_segment(data=trx$trx[V3=="gene",], aes(x=V4, xend=V5, y=-1, yend=-1), colour="red") + 
   geom_segment(data=trx$trx[V3=="CDS",], aes(x=V4, xend=V5, y=-1, yend=-1), size=5, colour="red") + 
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), 
-        axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
-  scale_x_continuous(labels = paste0(c("147,500", "147,525", "147,550", "147,575"), " kB"), 
-                     breaks = c(147500000, 147525000, 147550000, 147575000), limits = c(147481265, 147581265)) +
-  ylim(-2,2) +
-  xlab("Chromosome 3")
+        axis.ticks.y = element_blank(), axis.line.y = element_blank(),
+        axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        axis.ticks.x = element_blank()) + 
+  xlim(147481265, 147581265) + 
+  ylim(-2,2)
 
 g.trx <- ggplot() + 
   geom_segment(data=trx$trx_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
@@ -247,20 +256,21 @@ g.acht3.rmip2020 <- ggplot(acht3$rmip2020, aes(POS, RMIP)) +
 g.acht3.LD <- ggplot(acht3$LD, aes(BP_B, R2)) + 
   geom_point(size=5, alpha=0.8, colour="dodgerblue4") + 
   ylab(expression(LD~(r^2))) + 
-  xlim(c(179271748, 179291748)) + 
-  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-        axis.ticks.x = element_blank())
- 
+  scale_x_continuous(labels = paste0(c("179,275", "179,280", "179,285", "179,290"), " kB"),
+                     breaks = c(179275000, 179280000, 179285000, 179900000), limits = c(179271748, 179291748)) + 
+  theme() + 
+  xlab("Chromosome 7")
+
 g.acht3.gene <- ggplot() + 
   geom_segment(data=acht3$gen[V3=="gene",], aes(x=V4, xend=V5, y=1, yend=1)) + 
   geom_segment(data=acht3$gen[V3=="CDS",], aes(x=V4, xend=V5, y=1, yend=1), size=5) + 
   geom_segment(data=acht3$acht3[V3=="gene",], aes(x=V4, xend=V5, y=1, yend=1), colour="red") + 
   geom_segment(data=acht3$acht3[V3=="CDS",], aes(x=V4, xend=V5, y=1, yend=1), size=5, colour="red") + 
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), 
-        axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
-  scale_x_continuous(labels = paste0(c("179,275", "179,280", "179,285", "179,290"), " kB"),
-                     breaks = c(179275000, 179280000, 179285000, 179900000), limits = c(179271748, 179291748)) + 
-  xlab("Chromosome 7")
+        axis.ticks.y = element_blank(), axis.line.y = element_blank(),
+        axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        axis.ticks.x = element_blank()) + 
+  xlim(c(179271748, 179291748)) 
   
 g.acht3.acht <- ggplot() + 
   geom_segment(data=acht3$acht3_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
@@ -295,7 +305,7 @@ g.PMI1.rmip2020 <- ggplot(PMI1$rmip2020, aes(POS, RMIP)) +
   geom_point(size=5, alpha=0.8, aes(colour=trait)) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), legend.position = c(0.9, 0.8)) + 
-  xlim(86054177, 86074177) + 
+  xlim(86062903, 86065425) + 
   scale_color_manual(values = c("grey50"),
                      name="Trait related to", na.translate = F, label=greeks) + 
   ylab("RMIP\n2020")
@@ -310,21 +320,20 @@ g.PMI1.LD <- ggplot(PMI1$LD, aes(BP_B, R2)) +
   #      axis.ticks.x = element_blank())
 
 g.PMI1.gene <- ggplot() + 
-  geom_segment(data=PMI1$gen[V3=="gene",], aes(x=V4, xend=V5, y=1, yend=1)) + 
-  geom_segment(data=PMI1$gen[V3=="CDS",], aes(x=V4, xend=V5, y=1, yend=1), size=5) + 
-  geom_segment(data=PMI1$PMI1[V3=="gene",], aes(x=V4, xend=V5, y=1, yend=1), colour="red") + 
-  geom_segment(data=PMI1$PMI1[V3=="CDS",], aes(x=V4, xend=V5, y=1, yend=1), size=5, colour="red") + 
-  theme(axis.text.y = element_blank(), axis.title.y = element_blank(), 
+  geom_segment(data=PMI1$PMI1_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
+               arrow = arrow(length = unit(1, "cm"), ends = "first"), colour="red") + 
+  geom_segment(data=PMI1$PMI1_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5, colour="red") + 
+  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
+        axis.text.y = element_blank(), axis.title.y = element_blank(), 
         axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
-  #scale_x_continuous(labels = paste0(c("179,275", "179,280", "179,285", "179,290"), " kB"),
-  #                   breaks = c(179275000, 179280000, 179285000, 179900000), limits = c(179271748, 179291748)) + 
-  xlab("Chromosome 1")
-
+  ylim(-1, 1)
+  
 mutPSI <- read.table("psi1.txt", header = F)
 
 g.PMI1.pmi1 <- ggplot() + 
   geom_segment(data=PMI1$PMI1_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
-               arrow = arrow(length = unit(1, "cm"))) + 
+               arrow = arrow(length = unit(1, "cm"), ends = "first")) + 
   geom_segment(data=PMI1$PMI1_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
   annotate("text", x=85241864, y=-0.8, label=expression(Zm00001d029761~"("*italic(PMI1)*")")) + 
   geom_point(aes(y=0.5, x=85243339), shape=25, fill="red", size=4) + 
@@ -339,7 +348,7 @@ g.PMI1.pmi1 <- ggplot() +
         axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
   ylim(-1, 1)
 
-g.6 <- g.PMI1.rmip2020 / g.PMI1.LD / g.PMI1.pmi1 + plot_layout(heights = c(4,4, 1, 1))
+g.6 <- g.PMI1.rmip2020 / g.PMI1.LD / g.PMI1.gene / g.PMI1.pmi1 + plot_layout(heights = c(4, 4, 1, 1))
 
 ggsave(plot = g.6, filename = "../Data/Maize_NPQ_Natural_Variation/figures/PMI1.svg", device = "svg", width = 12, height = 6)
 
@@ -364,12 +373,10 @@ g.OEP37.rmip2020 <- ggplot(OEP37$rmip2020, aes(POS, RMIP)) +
 g.OEP37.LD <- ggplot(OEP37$LD, aes(BP_B, R2)) + 
   geom_point(size=5, alpha=0.8, colour="dodgerblue4") + 
   ylab(expression(LD~(r^2))) + 
-  xlim(187809720, 187909720) + 
-  #scale_x_continuous(labels = paste0(c("860,64", "860,65", "860,62"), " kB"),
-  #                   breaks = c(86064000, 86065000, 86062000), limits = c(86062903, 86065425)) + 
-  xlab("Chromosome 5") + 
-  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
-      axis.ticks.x = element_blank())
+  scale_x_continuous(labels = paste0(c("187,830", "187,860", "187,890"), " kB"),
+                     breaks = c(187830000, 187860000, 187890000), limits = c(187809720, 187909720)) + 
+  xlab("Chromosome 5") +
+  theme()
 
 g.OEP37.gene <- ggplot() + 
   geom_segment(data=OEP37$gen[V3=="gene",], aes(x=V4, xend=V5, y=1, yend=1)) + 
@@ -377,14 +384,15 @@ g.OEP37.gene <- ggplot() +
   geom_segment(data=OEP37$OEP37[V3=="gene",], aes(x=V4, xend=V5, y=1, yend=1), colour="red") + 
   geom_segment(data=OEP37$OEP37[V3=="CDS",], aes(x=V4, xend=V5, y=1, yend=1), size=5, colour="red") + 
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), 
-        axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
-  scale_x_continuous(labels = paste0(c("187,830", "187,860", "187,890"), " kB"),
-                     breaks = c(187830000, 187860000, 187890000), limits = c(187809720, 187909720)) + 
-  xlab("Chromosome 5") 
+        axis.ticks.y = element_blank(), axis.line.y = element_blank(),
+        axis.text.x = element_blank(), axis.title.x = element_blank(), 
+        axis.ticks.x = element_blank()) + 
+  xlim(187809720, 187909720)
+  
 
 g.OEP37.OEP37 <- ggplot() + 
   geom_segment(data=OEP37$OEP37_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
-               arrow = arrow(length = unit(1, "cm"))) + 
+               arrow = arrow(length = unit(1, "cm"), ends = "first")) + 
   geom_segment(data=OEP37$OEP37_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
   annotate("text", x=186954049, y=-0.8, label=expression(Zm00001d017171~"("*italic(OEP37)*")")) + 
   #geom_point(aes(y=0.5, x=85243339), shape=25, fill="red", size=4) + 
