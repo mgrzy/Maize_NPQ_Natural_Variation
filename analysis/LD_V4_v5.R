@@ -9,6 +9,16 @@ dat2 <- read.table("../../BigData/Maize/v5/Genotypes/WiDiv/rMVP/Bugeater.geno.in
 geno2 <- attach.big.matrix("../../BigData/Maize/v5/Genotypes/WiDiv/rMVP/Bugeater.geno.desc")
 map2 <- fread("../../BigData/Maize/v5/Genotypes/WiDiv/rMVP/Bugeater.geno.map", data.table = F)
 
+### PSBS
+
+PSBSv4 <- data.frame(Taxa=dat$V1,
+                     rs3_177340601=geno[which(map$SNP=="rs3_177340601"),])
+
+PSBSv5 <- data.frame(Taxa=dat2$V1,
+                     chr3_179566467=geno2[which(map2$SNP=="chr3_179566467"),])
+
+b <- merge(PSBSv4, PSBSv5, by="Taxa")
+
 ### PSI3
 
 PSI3v4 <- data.frame(Taxa=dat$V1,
@@ -43,8 +53,28 @@ ACHTv5 <- data.frame(Taxa=dat2$V1,
                      chr7_182742647=geno2[which(map2$SNP=="chr7_182742647"),],
                      chr7_182742793=geno2[which(map2$SNP=="chr7_182742793"),],
                      chr7_182742814=geno2[which(map2$SNP=="chr7_182742814"),],
-                     chr7_182742836=geno2[which(map2$SNP=="chr7_182742836"),])
+                     chr7_182742836=geno2[which(map2$SNP=="chr7_182742836"),],
+                     chr7_182742510=geno2[which(map2$SNP=="chr7_182742510"),])
 
 acht <- merge(ACHT3v4, ACHTv5, by="Taxa")
 
+<<<<<<< HEAD
+=======
+### OEP37
+
+OEPv4 <-  data.frame(Taxa=dat$V1,
+                     rs5_187859720=geno[which(map$SNP=="rs5_187859720"),])
+
+OEPv5 <- data.frame(Taxa=dat2$V1,
+                    chr5_186953749=geno2[which(map2$SNP=="chr5_186953749"),],
+                    chr5_186952808=geno2[which(map2$SNP=="chr5_186952808"),],
+                    chr5_186952822=geno2[which(map2$SNP=="chr5_186952822"),],
+                    chr5_186952823=geno2[which(map2$SNP=="chr5_186952823"),],
+                    chr5_186955468=geno2[which(map2$SNP=="chr5_186955468"),],
+                    chr5_186955834=geno2[which(map2$SNP=="chr5_186955834"),],
+                    chr5_186955859=geno2[which(map2$SNP=="chr5_186955859"),])
+
+oep <- merge(OEPv4, OEPv5)
+
+>>>>>>> fe40a965bcabbf001e5a58724dc63c8a73a1cf89
 ###

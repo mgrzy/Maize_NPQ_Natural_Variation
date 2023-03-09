@@ -48,3 +48,4 @@ bcftools view ../../BigData/Maize/v5/Genotypes/All/VCF/imputed/chr_5_imputed.vcf
 -Oz -o ../Data/Maize_NPQ_Natural_Variation/data/genomic/VCF/OEP37.vcf.gz
 
 bcftools index ../Data/Maize_NPQ_Natural_Variation/data/genomic/VCF/OEP37.vcf.gz -t
+
