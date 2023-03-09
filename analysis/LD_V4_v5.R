@@ -58,9 +58,7 @@ ACHTv5 <- data.frame(Taxa=dat2$V1,
 
 acht <- merge(ACHT3v4, ACHTv5, by="Taxa")
 
-<<<<<<< HEAD
-=======
-### OEP37
+# OEP37
 
 OEPv4 <-  data.frame(Taxa=dat$V1,
                      rs5_187859720=geno[which(map$SNP=="rs5_187859720"),])
@@ -76,5 +74,4 @@ OEPv5 <- data.frame(Taxa=dat2$V1,
 
 oep <- merge(OEPv4, OEPv5)
 
->>>>>>> fe40a965bcabbf001e5a58724dc63c8a73a1cf89
 ###

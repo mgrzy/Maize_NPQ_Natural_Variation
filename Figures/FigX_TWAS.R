@@ -67,4 +67,4 @@ g4 <- ggplot(a, aes(x = BPcum, y = -log10(NPQendme))) +
 
 g1 + g2 + g3 + g4 + plot_annotation(tag_levels = "a")
 
-ggsave("../Data/Maize_NPQ_Natural_Variation/figures/TWAS.png", units = "mm", width = 60, height = 40, scale = 4)
+ggsave("../Data/Maize_NPQ_Natural_Variation/figures/TWAS.png", units = "mm", width = 80, height = 40, scale = 4)
