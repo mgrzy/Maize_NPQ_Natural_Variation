@@ -46,3 +46,5 @@ ACHTv5 <- data.frame(Taxa=dat2$V1,
                      chr7_182742836=geno2[which(map2$SNP=="chr7_182742836"),])
 
 acht <- merge(ACHT3v4, ACHTv5, by="Taxa")
+
+###
