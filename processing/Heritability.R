@@ -20,4 +20,4 @@ write.csv(h2, "H2.csv", row.names = F)
 
 h2 %>%
   group_by(year) %>%
-  summarise(mean(H2))
+  summarise(min(H2), max(H2))

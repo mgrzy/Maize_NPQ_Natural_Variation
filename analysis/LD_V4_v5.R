@@ -74,4 +74,36 @@ OEPv5 <- data.frame(Taxa=dat2$V1,
 
 oep <- merge(OEPv4, OEPv5)
 
-###
+### PMI1
+
+PMIv4 <-  data.frame(Taxa=dat$V1,
+                     rs1_86064177=geno[which(map$SNP=="rs1_86064177"),])
+
+PMIv5 <-  data.frame(Taxa=dat2$V1,
+                     chr1_85243338=geno2[which(map2$SNP=="chr1_85243338"),],
+                     chr1_85243339=geno2[which(map2$SNP=="chr1_85243339"),],
+                     chr1_85241837=geno2[which(map2$SNP=="chr1_85241837"),],
+                     chr1_85241957=geno2[which(map2$SNP=="chr1_85241957"),],
+                     chr1_85241996=geno2[which(map2$SNP=="chr1_85241996"),],
+                     chr1_85242086=geno2[which(map2$SNP=="chr1_85242086"),],
+                     chr1_85242272=geno2[which(map2$SNP=="chr1_85242272"),],
+                     chr1_85242275=geno2[which(map2$SNP=="chr1_85242275"),],
+                     chr1_85242380=geno2[which(map2$SNP=="chr1_85242380"),],
+                     chr1_85242512=geno2[which(map2$SNP=="chr1_85242512"),],
+                     chr1_85242515=geno2[which(map2$SNP=="chr1_85242515"),],
+                     chr1_85242704=geno2[which(map2$SNP=="chr1_85242704"),],
+                     chr1_85242710=geno2[which(map2$SNP=="chr1_85242710"),],
+                     chr1_85241837=geno2[which(map2$SNP=="chr1_85241837"),],
+                     chr1_85242734=geno2[which(map2$SNP=="chr1_85242734"),],
+                     chr1_85242830=geno2[which(map2$SNP=="chr1_85242830"),],
+                     chr1_85242986=geno2[which(map2$SNP=="chr1_85242986"),],
+                     chr1_85243046=geno2[which(map2$SNP=="chr1_85243046"),],
+                     chr1_85243088=geno2[which(map2$SNP=="chr1_85243088"),],
+                     chr1_85243097=geno2[which(map2$SNP=="chr1_85243097"),],
+                     chr1_85241837=geno2[which(map2$SNP=="chr1_85241837"),],
+                     chr1_85243154=geno2[which(map2$SNP=="chr1_85243154"),],
+                     chr1_85243178=geno2[which(map2$SNP=="chr1_85243178"),],
+                     chr1_85243241=geno2[which(map2$SNP=="chr1_85243241"),],
+                     chr1_85243304=geno2[which(map2$SNP=="chr1_85243304"),])
+
+pm <- merge(PMIv4, PMIv5)
