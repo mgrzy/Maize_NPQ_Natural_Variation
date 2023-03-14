@@ -159,10 +159,10 @@ g.irm1 <- ggplot() +
                arrow = arrow(length = unit(0.5, "cm"), ends = "last")) + 
   geom_segment(data=irm1$irm1_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
   annotate("text", x=181981838, y=-0.75, label=expression(Zm00001d005657~"("*italic(IRM1)*")")) + 
-  geom_segment(aes(y=1, yend=0, x=181981544, xend=181981544), size=2, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=181981600, xend=181981600), size=2, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=181981652, xend=181981652), size=2, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=181982035, xend=181982035), size=2, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=181981544, xend=181981544), size=2, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=181981600, xend=181981600), size=2, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=181981652, xend=181981652), size=2, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=181982035, xend=181982035), size=2, colour="red") + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
@@ -278,10 +278,10 @@ g.acht3.acht <- ggplot() +
   geom_segment(data=acht3$acht3_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
   annotate("text", x=182742282, y=-0.8, label=expression(Zm00001d022518~"("*italic(ACHT3)*")")) + 
   geom_segment(aes(y=1, yend=0, x=182742647, xend=182742647), size=2, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=182742793, xend=182742793), size=2, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=182742814, xend=182742814), size=2, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=182742836, xend=182742836), size=2, colour="red") + 
-  geom_point(aes(y=0.5, x=182742510), shape=25, fill="red", size=4) + 
+  #geom_segment(aes(y=1, yend=0, x=182742793, xend=182742793), size=2, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=182742814, xend=182742814), size=2, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=182742836, xend=182742836), size=2, colour="red") + 
+  #geom_point(aes(y=0.5, x=182742510), shape=25, fill="red", size=4) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 
         axis.text.y = element_blank(), axis.title.y = element_blank(), 
@@ -329,15 +329,16 @@ g.PMI1.gene <- ggplot() +
         axis.ticks.y = element_blank(), axis.line.y = element_blank()) + 
   ylim(-1, 1)
   
-mutPSI <- read.table("psi1.txt", header = F)
+#mutPSI <- read.table("psi1.txt", header = F)
 
 g.PMI1.pmi1 <- ggplot() + 
   geom_segment(data=PMI1$PMI1_v5[V3=="gene",], aes(x=V4, xend=V5, y=0, yend=0), 
                arrow = arrow(length = unit(1, "cm"), ends = "first")) + 
   geom_segment(data=PMI1$PMI1_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
   annotate("text", x=85241864, y=-0.8, label=expression(Zm00001d029761~"("*italic(PMI1)*")")) + 
-  geom_point(aes(y=0.5, x=85243339), shape=25, fill="red", size=4) + 
-  geom_segment(data=mutPSI, aes(y=1, yend=0, x=V1, xend=V1), size=2, colour="red") + 
+  geom_segment(aes(y=1, yend=0, x=85243154, xend=85243154), size=2, colour="red") + 
+  #geom_point(aes(y=0.5, x=85243154), colour="red", size=4) + 
+  #geom_segment(data=mutPSI, aes(y=1, yend=0, x=V1, xend=V1), size=2, colour="red") + 
   #geom_segment(aes(y=1, yend=0, x=182742793, xend=182742793), size=2, colour="red") + 
   #geom_segment(aes(y=1, yend=0, x=182742814, xend=182742814), size=2, colour="red") + 
   #geom_segment(aes(y=1, yend=0, x=182742836, xend=182742836), size=2, colour="red") + 
@@ -396,13 +397,13 @@ g.OEP37.OEP37 <- ggplot() +
   geom_segment(data=OEP37$OEP37_v5[V3=="CDS",], aes(x=V4, xend=V5, y=0, yend=0), size=5) + 
   annotate("text", x=186954049, y=-0.8, label=expression(Zm00001d017171~"("*italic(OEP37)*")")) + 
   #geom_point(aes(y=0.5, x=85243339), shape=25, fill="red", size=4) + 
-  geom_segment(aes(y=1, yend=0, x=186953749, xend=186953749), size=1, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=186952808, xend=186952808), size=1, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=186952822, xend=186952822), size=1, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=186952823, xend=186952823), size=1, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=186955468, xend=186955468), size=1, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=186955834, xend=186955834), size=1, colour="red") + 
-  geom_segment(aes(y=1, yend=0, x=186955859, xend=186955859), size=1, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=186953749, xend=186953749), size=1, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=186952808, xend=186952808), size=1, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=186952822, xend=186952822), size=1, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=186952823, xend=186952823), size=1, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=186955468, xend=186955468), size=1, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=186955834, xend=186955834), size=1, colour="red") + 
+  #geom_segment(aes(y=1, yend=0, x=186955859, xend=186955859), size=1, colour="red") + 
   #geom_point(aes(y=0.5, x=182742510), shape=25, fill="red", size=4) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), axis.line.x = element_blank(), 

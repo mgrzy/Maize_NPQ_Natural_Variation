@@ -39,6 +39,7 @@ psi.psbs$psbs_v5 <- gff2[grep("Zm00001eb146510", gff2$V9)]
 psi.psbs$psi_v5 <- gff2[grep("Zm00001eb146270", gff2$V9)]
 
 g.psi.rmip2020 <- ggplot(psi.psbs$rmip2020, aes(POS, RMIP)) + 
+  geom_vline(xintercept = c(176152936, 177340601), linetype=2, colour="red") + 
   geom_point(size=4, alpha=0.8, aes(colour=trait)) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), 
@@ -49,6 +50,7 @@ g.psi.rmip2020 <- ggplot(psi.psbs$rmip2020, aes(POS, RMIP)) +
                                         name="Trait related to", na.translate = F, label=greeks) # colour values for each trait
 
 g.psi.rmip2021 <- ggplot(psi.psbs$rmip2021, aes(POS, RMIP)) + 
+  geom_vline(xintercept = c(176152936, 177340601), linetype=2, colour="red") + 
   geom_point(size=4, alpha=0.8, aes(colour=trait)) + 
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), 
         axis.ticks.x = element_blank(), 
@@ -59,7 +61,10 @@ g.psi.rmip2021 <- ggplot(psi.psbs$rmip2021, aes(POS, RMIP)) +
                                         name="Trait related to", na.translate = F, label=greeks) # colour values for each trait
 
 g.psi.LD <- ggplot(psi.psbs$LD, aes(BP_B, R2)) + 
-  geom_point(size=4, alpha=0.8, colour="dodgerblue4") + 
+  geom_vline(xintercept = c(176152936, 177340601), linetype=2, colour="red") + 
+  geom_point(size=4, alpha=0.9, colour="dodgerblue4") + 
+  geom_point(data=psi.psbs$LD[psi.psbs$LD$BP_B==177340601,], aes(BP_B, R2), colour="red", size=4, alpha=0.9) + 
+  geom_point(data=psi.psbs$LD[psi.psbs$LD$BP_B==176152936,], aes(BP_B, R2), colour="red", size=4, alpha=0.9) + 
   ylab(expression(LD~(r^2))) + 
   xlab("Chromosome 3") + 
   theme() + 
@@ -174,7 +179,8 @@ g.psbs <- b %>%
 g.psbs.zoom <- ggplot(PsbS.data, aes(x = POS, y = -log10(Zm00001d042697.MLM), colour=R2)) +
   geom_vline(xintercept = 177338945) +
   geom_point(size=4) + 
-  scale_colour_gradientn(colours=rev(jcolors('rainbow')), name="LD againt\n3:177,340,601") + 
+  geom_point(data=PsbS.data[PsbS.data$POS==176152936,], aes(POS, -log10(Zm00001d042697.MLM)), colour="red", size=4, alpha=0.9) + 
+  scale_colour_gradientn(colours=rev(jcolors('rainbow')), name="LD relative\n3:177,340,601") + 
   labs(x = "Chromosome 3",  y = expression(-log[10](italic(p)))) + 
   scale_x_continuous(labels = paste0(c("176", "177", "178"), " MB"),
                      breaks = c(176000000, 177000000,178000000), limits = c(175652936, 178038945)) + 
@@ -186,7 +192,7 @@ g.psbs.zoom <- ggplot(PsbS.data, aes(x = POS, y = -log10(Zm00001d042697.MLM), co
 g.psbs.box <- ggplot(dat, aes(rs3_177339629, Zm00001d042697, fill=rs3_177339629)) + 
   geom_boxplot() + 
   theme(legend.position = "none") + 
-  ylab(expression(italic(PSBS)~(FPKM))) + 
+  ylab(expression(italic(PSBS)~Expression~(FPKM))) + 
   xlab("3:177,340,601") + 
   scale_fill_d3()
 
@@ -461,3 +467,4 @@ gNPQ1 | ((gA3 | gA4) / (gA5 | gA7))  + plot_annotation(tag_levels = "a")
 
 
 ggsave("../Data/Maize_NPQ_Natural_Variation/figures/Fig2/PSI3_effect.svg", units = "mm", width = 75, height = 40, scale = 4)
+
